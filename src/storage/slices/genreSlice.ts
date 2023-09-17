@@ -1,6 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState = {
+interface GenreState {
+  selectedGenres: number[]; // Assuming genre IDs are of type number
+}
+
+const initialState: GenreState = {
   selectedGenres: [],
 };
 
@@ -8,17 +12,17 @@ const genreSlice = createSlice({
   name: "genre",
   initialState,
   reducers: {
-    addSelectGenre: (state, action) => {
+    addSelectGenre: (state, action: PayloadAction<number>) => {
       const genreId = action.payload;
       state.selectedGenres.push(genreId);
     },
-    removeSelectGenre: (state, action) => {
+    removeSelectGenre: (state, action: PayloadAction<number>) => {
       const genreId = action.payload;
       state.selectedGenres = state.selectedGenres.filter(
         (id) => id !== genreId
       );
     },
-    addAllGenre: (state, action) => {
+    addAllGenre: (state, action: PayloadAction<number[]>) => {
       state.selectedGenres = action.payload;
     },
     clearSelectedGenre: (state) => {
@@ -26,10 +30,12 @@ const genreSlice = createSlice({
     },
   },
 });
+
 export const {
   addSelectGenre,
   removeSelectGenre,
   addAllGenre,
   clearSelectedGenre,
 } = genreSlice.actions;
+
 export default genreSlice.reducer;
